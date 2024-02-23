@@ -16,26 +16,26 @@ def data_vis():
     data = data_preproc()
     column = list(data.columns)
     print("----------------", column)
-    
+
     categ = []
     numer = []
-    
+
     for col in data.columns:
         if data[col].dtype == 'object':  # Check if the data type is object (string)
             categ.append(col)
         else:
             numer.append(col)
-            
+
     print("categ-------", categ)
     print("numer--------", numer)
 
-            
-    column_to_remove = ["Bollinger_signal", "Bollinger_upper_band", "pivot_support_1", "SAR_relative", "Target", "ATR", "MACD", "RSI_signal", "exchange", "fibonacci_signal", "ichimoku_c_signal", "VWAP_relative_long", "VWAP_relative_short", "ichimoku_c_conversion_line", "s&p500_move_15m", "ichimoku_c_base_line"]
+
+    column_to_remove = ["Bollinger_signal", "Bollinger_upper_band", "pivot_support_1", "SAR_relative", "Target", "ATR", "MACD", "RSI_signal"]
     for col_to_remove in column_to_remove:
         column.remove(col_to_remove)
     print(column)
 #     
-    columns_to_remove_outliers = ["Stoch_O_d_value"]
+    columns_to_remove_outliers = ["exchange", "fibonacci_signal", "ichimoku_c_base_line", "ichimoku_c_conversion_line", "ichimoku_c_signal", "s&p500_move_15m", "Stoch_O_d_value", "VWAP_relative_long", "VWAP_relative_short"]
 
     for col in columns_to_remove_outliers:
         q1 = data[col].quantile(0.25)
@@ -47,14 +47,14 @@ def data_vis():
         # Apply the filtering conditions to the original DataFrame
         data = data.loc[(data[col] < upper_limit) & (data[col] > lower_limit)]
 
-    
+
     for i in column:
         fig = px.histogram(data, y=i)
         fig.update_layout(template='plotly_dark')
         fig.update_xaxes(showgrid=False, zeroline=False)
         fig.update_yaxes(showgrid=False, zeroline=False)
         fig.write_image(f"{i}_hist.jpg")
-    
+
     for i in column:
         fig = px.box(data, y=i)
         fig.update_layout(template='plotly_dark')
@@ -62,7 +62,7 @@ def data_vis():
         fig.update_yaxes(showgrid=False,zeroline=False)
         fig.write_image(f"{i}_box.jpg")
 
-    columns_to_remove = ["Target", "Bollinger_upper_band", "pivot_support_1", "ichimoku_c_conversion_line", "SAR_relative"]
+    columns_to_remove = ["Target", ]
     df=data.drop(columns=columns_to_remove,axis=1)
     y=df.corr().columns.tolist()
     z=df.corr().values.tolist()
