@@ -30,12 +30,12 @@ def data_vis():
     print("numer--------", numer)
 
             
-    column_to_remove = ["Bollinger_signal", "Bollinger_upper_band", "pivot_support_1", "SAR_relative", "Target", "ATR", "MACD", "RSI_signal"]
+    column_to_remove = ["Bollinger_signal", "Bollinger_upper_band", "pivot_support_1", "SAR_relative", "Target", "ATR", "MACD", "RSI_signal", "exchange", "fibonacci_signal", "ichimoku_c_signal", "VWAP_relative_long", "VWAP_relative_short", "ichimoku_c_conversion_line"]
     for col_to_remove in column_to_remove:
         column.remove(col_to_remove)
     print(column)
 #     
-    columns_to_remove_outliers = ["exchange", "fibonacci_signal", "ichimoku_c_base_line", "ichimoku_c_conversion_line", "ichimoku_c_signal", "s&p500_move_15m", "Stoch_O_d_value", "VWAP_relative_long", "VWAP_relative_short"]
+    columns_to_remove_outliers = ["ichimoku_c_base_line",  "s&p500_move_15m", "Stoch_O_d_value"]
 
     for col in columns_to_remove_outliers:
         q1 = data[col].quantile(0.25)
@@ -62,7 +62,7 @@ def data_vis():
         fig.update_yaxes(showgrid=False,zeroline=False)
         fig.write_image(f"{i}_box.jpg")
 
-    columns_to_remove = ["Target", ]
+    columns_to_remove = ["Target", "Bollinger_upper_band", "pivot_support_1", "ichimoku_c_conversion_line", "SAR_relative"]
     df=data.drop(columns=columns_to_remove,axis=1)
     y=df.corr().columns.tolist()
     z=df.corr().values.tolist()
