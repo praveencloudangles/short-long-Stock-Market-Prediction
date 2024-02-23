@@ -30,12 +30,12 @@ def data_vis():
     print("numer--------", numer)
 
             
-    column_to_remove = ["Bollinger_signal", "Bollinger_upper_band", "pivot_support_1", "SAR_relative", "Target", "ATR", "MACD", "RSI_signal", "exchange", "fibonacci_signal", "ichimoku_c_signal", "VWAP_relative_long", "VWAP_relative_short", "ichimoku_c_conversion_line"]
+    column_to_remove = ["Bollinger_signal", "Bollinger_upper_band", "pivot_support_1", "SAR_relative", "Target", "ATR", "MACD", "RSI_signal", "exchange", "fibonacci_signal", "ichimoku_c_signal", "VWAP_relative_long", "VWAP_relative_short", "ichimoku_c_conversion_line", "s&p500_move_15m", "ichimoku_c_base_line"]
     for col_to_remove in column_to_remove:
         column.remove(col_to_remove)
     print(column)
 #     
-    columns_to_remove_outliers = ["ichimoku_c_base_line",  "s&p500_move_15m", "Stoch_O_d_value"]
+    columns_to_remove_outliers = ["Stoch_O_d_value"]
 
     for col in columns_to_remove_outliers:
         q1 = data[col].quantile(0.25)
